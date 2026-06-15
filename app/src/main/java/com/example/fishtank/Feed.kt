@@ -48,20 +48,21 @@ class Feed : AppCompatActivity() {
             }
         })
 
-        // 2. Lắng nghe sự kiện click vào nút
+        // 4. Lắng nghe sự kiện click vào nút
         btnFeedback.setOnClickListener {
             // Đóng màn hình hiện tại để tự động lùi về màn hình trước
             finish()
         }
 //        ref = FirebaseDatabase.getInstance().reference.child("Home")
 
+        // 5. Bat Switch
         s1.setOnCheckedChangeListener { _, isChecked ->
             // Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
             if (!isUpdatingFromFirebase) {
                 ref.setValue(isChecked)
                     .addOnSuccessListener {
                         val status = if (isChecked) "BẬT" else "TẮT"
-                        Toast.makeText(this, "Đã $status thiết bị thành công!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Đã $status cho ăn thành công!", Toast.LENGTH_SHORT).show()
                     }
             }
         }

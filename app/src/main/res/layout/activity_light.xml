@@ -29,6 +29,7 @@
             android:id="@+id/button_light_back"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#3CAFE0"
             android:text="Back" />
 
         <LinearLayout
@@ -52,7 +53,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Light "
+                    android:text="Light 1"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#333"/>
