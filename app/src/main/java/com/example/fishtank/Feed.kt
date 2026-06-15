@@ -10,9 +10,15 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import android.content.Intent
 import android.widget.Button
 
+import android.widget.Toast
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+
 class Feed : AppCompatActivity() {
 
     private lateinit var ref: DatabaseReference
+    private var isUpdatingFromFirebase = false // Cờ chặn vòng lặp vô hạn
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +26,44 @@ class Feed : AppCompatActivity() {
 
         val s1 = findViewById<SwitchMaterial>(R.id.switch1)
 
-        ref = FirebaseDatabase.getInstance().reference.child("Home")
+        val btnFeedback= findViewById<Button>(R.id.button_feed_back)
 
-        s1.setOnCheckedChangeListener { _, v ->
-            ref.child("Feed").setValue(if (v) 1 else 0)
+        // 2. Kết nối tới nhánh "switch1" trên Firebase
+        ref = FirebaseDatabase.getInstance().reference.child("Home").child("Feed")
+
+        // 3. LẮNG NGHE Firebase đổi dữ liệu -> Cập nhật lên Giao diện app
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                isUpdatingFromFirebase = true // Bật cờ (Hệ thống đang tự đổi giao diện)
+
+                // Lấy giá trị true/false từ Firebase về (Mặc định là false nếu chưa có dữ liệu)
+                val isCheckedOnFirebase = snapshot.getValue(Boolean::class.java) ?: false
+                s1.isChecked = isCheckedOnFirebase // Gạt nút trên màn hình theo Firebase
+
+                isUpdatingFromFirebase = false // Hạ cờ (Hệ thống đã cập nhật xong)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@Feed, "Lỗi: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // 2. Lắng nghe sự kiện click vào nút
+        btnFeedback.setOnClickListener {
+            // Đóng màn hình hiện tại để tự động lùi về màn hình trước
+            finish()
+        }
+//        ref = FirebaseDatabase.getInstance().reference.child("Home")
+
+        s1.setOnCheckedChangeListener { _, isChecked ->
+            // Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
+            if (!isUpdatingFromFirebase) {
+                ref.setValue(isChecked)
+                    .addOnSuccessListener {
+                        val status = if (isChecked) "BẬT" else "TẮT"
+                        Toast.makeText(this, "Đã $status thiết bị thành công!", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
 
 

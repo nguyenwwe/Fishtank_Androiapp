@@ -19,6 +19,13 @@ class Water_Filtration : AppCompatActivity() {
         setContentView(R.layout.activity_water_filtration)
 
         val s3 = findViewById<SwitchMaterial>(R.id.switch3)
+        val btnWaterFilltrationback= findViewById<Button>(R.id.button_water_filtration_back)
+
+        // 2. Lắng nghe sự kiện click vào nút
+        btnWaterFilltrationback.setOnClickListener {
+            // Đóng màn hình hiện tại để tự động lùi về màn hình trước
+            finish()
+        }
 
         ref = FirebaseDatabase.getInstance().reference.child("Home")
 
