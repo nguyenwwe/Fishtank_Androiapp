@@ -1,18 +1,16 @@
 package com.example.fishtank
 
 import android.os.Bundle
-import android.widget.Switch
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.android.material.switchmaterial.SwitchMaterial
-
-import android.content.Intent
 import android.widget.Button
-
+import android.widget.ImageView
+import android.widget.Switch
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Feed : AppCompatActivity() {
@@ -23,6 +21,9 @@ class Feed : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
+
+        // Bien de doi background
+        val bgImage = findViewById<ImageView>(R.id.bgImage);
 
         val s1 = findViewById<SwitchMaterial>(R.id.switch1)
 
@@ -57,7 +58,7 @@ class Feed : AppCompatActivity() {
 
         // 5. Bat Switch
         s1.setOnCheckedChangeListener { _, isChecked ->
-            // Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
+            //5a. Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
             if (!isUpdatingFromFirebase) {
                 ref.setValue(isChecked)
                     .addOnSuccessListener {
@@ -65,7 +66,14 @@ class Feed : AppCompatActivity() {
                         Toast.makeText(this, "Đã $status cho ăn thành công!", Toast.LENGTH_SHORT).show()
                     }
             }
+            //5b. Doi background
+            if (isChecked) {
+                bgImage.setImageResource(R.drawable.background_feeding);
+            } else {
+                bgImage.setImageResource(R.drawable.background_1);
+            }
         }
+
 
 
 

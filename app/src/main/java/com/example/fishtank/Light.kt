@@ -9,11 +9,13 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
 
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+
 
 class Light : AppCompatActivity() {
 
@@ -24,6 +26,11 @@ class Light : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_light)
+
+        // Bien de doi background
+        val bgImage = findViewById<ImageView>(R.id.bgImage);
+        var currentBackground = R.drawable.background_1;
+
 
         val s1 = findViewById<SwitchMaterial>(R.id.switch1)
         val s2 = findViewById<SwitchMaterial>(R.id.switch2)
@@ -53,7 +60,7 @@ class Light : AppCompatActivity() {
 
         // 4. Bật Switch
         s1.setOnCheckedChangeListener { _, isChecked ->
-            // Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
+            //4a. Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
             if (!isUpdatingFromFirebase) {
                 ref.child("Light_1").setValue(isChecked)
                     .addOnSuccessListener {
@@ -61,6 +68,27 @@ class Light : AppCompatActivity() {
                         Toast.makeText(this, "Đã $status đèn vàng thành công!", Toast.LENGTH_SHORT).show()
                     }
             }
+            //4b. Doi background
+            if (isChecked) {
+                if( currentBackground == R.drawable.background_1){
+                    bgImage.setImageResource(R.drawable.background_ly);
+                    currentBackground = R.drawable.background_ly;
+                }else{
+                    bgImage.setImageResource(R.drawable.background_lb);
+                    currentBackground = R.drawable.background_lb;
+                }
+            } else {
+            if( currentBackground == R.drawable.background_lb){
+                bgImage.setImageResource(R.drawable.background_lw);
+                currentBackground = R.drawable.background_lw;
+
+            }else{
+                bgImage.setImageResource(R.drawable.background_1);
+                currentBackground = R.drawable.background_1;
+
+
+            }
+        }
         }
         // 5. Lắng nghe sự kiện click vào nút
         btnlightback.setOnClickListener {
@@ -89,7 +117,7 @@ class Light : AppCompatActivity() {
 
         // 7.Bat Switch
         s2.setOnCheckedChangeListener { _, isChecked ->
-            // Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
+            //7a. Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
             if (!isUpdatingFromFirebase) {
                 ref.child("Light_2").setValue(isChecked)
                     .addOnSuccessListener {
@@ -97,6 +125,28 @@ class Light : AppCompatActivity() {
                         Toast.makeText(this, "Đã $status đèn trắng thành công!", Toast.LENGTH_SHORT).show()
                     }
             }
+            //7b. Doi hinh nen
+            if (isChecked) {
+                if( currentBackground == R.drawable.background_1){
+                    bgImage.setImageResource(R.drawable.background_lw);
+                    currentBackground = R.drawable.background_lw;
+                }else{
+                    bgImage.setImageResource(R.drawable.background_lb);
+                    currentBackground = R.drawable.background_lb;
+                }
+            } else {
+                if( currentBackground == R.drawable.background_lb){
+                    bgImage.setImageResource(R.drawable.background_ly);
+                    currentBackground = R.drawable.background_ly;
+
+                }else{
+                    bgImage.setImageResource(R.drawable.background_1);
+                    currentBackground = R.drawable.background_1;
+
+
+                }
+            }
+
         }
 
     }

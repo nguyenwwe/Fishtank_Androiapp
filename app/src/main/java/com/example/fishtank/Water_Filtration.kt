@@ -9,6 +9,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
 
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
@@ -25,6 +26,9 @@ class Water_Filtration : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_water_filtration)
+
+        // Bien de doi background
+        val bgImage = findViewById<ImageView>(R.id.bgImage);
 
         val s3 = findViewById<SwitchMaterial>(R.id.switch3)
         val btnWaterFiltrationback= findViewById<Button>(R.id.button_water_filtration_back)
@@ -59,13 +63,19 @@ class Water_Filtration : AppCompatActivity() {
 
         // 5. Bat Switch
         s3.setOnCheckedChangeListener { _, isChecked ->
-            // Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
+            //5a. Chỉ đẩy lên mạng nếu đây là do NGƯỜI DÙNG lấy tay gạt (không phải do mạng tự update)
             if (!isUpdatingFromFirebase) {
                 ref.setValue(isChecked)
                     .addOnSuccessListener {
                         val status = if (isChecked) "BẬT" else "TẮT"
                         Toast.makeText(this, "Đã $status lọc thành công!", Toast.LENGTH_SHORT).show()
                     }
+            }
+            //5b. Doi background
+            if (isChecked) {
+                bgImage.setImageResource(R.drawable.background_pumb);
+            } else {
+                bgImage.setImageResource(R.drawable.background_1);
             }
         }
 

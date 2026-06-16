@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val s1 = findViewById<SwitchMaterial>(R.id.switch1)
-//        val s2 = findViewById<SwitchMaterial>(R.id.switch2)
-//        val s3 = findViewById<SwitchMaterial>(R.id.switch3)
 
         // 1. Ánh xạ nút bấm từ giao diện XML
         val btn_Feed= findViewById<Button>(R.id.btn_Feed)
