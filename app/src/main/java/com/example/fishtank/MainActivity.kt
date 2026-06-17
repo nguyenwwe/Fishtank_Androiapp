@@ -22,7 +22,9 @@ class MainActivity : AppCompatActivity() {
         // 1. Ánh xạ nút bấm từ giao diện XML
         val btn_Feed= findViewById<Button>(R.id.btn_Feed)
         val btn_Light= findViewById<Button>(R.id.btn_Light)
+        val btn_Oxy= findViewById<Button>(R.id.btn_Oxy)
         val btn_Water_Filtration= findViewById<Button>(R.id.btn_Water_Filtration)
+
 
         // 2. Lắng nghe sự kiện click vào nút
         btn_Feed.setOnClickListener {
@@ -33,14 +35,21 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         btn_Light.setOnClickListener {
-            // Tạo một Intent để đi từ MainActivity sang Feed
+            // Tạo một Intent để đi từ MainActivity sang Light
             val intent = Intent(this, Light::class.java)
 
             // Kích hoạt lệnh chuyển trang
             startActivity(intent)
         }
+        btn_Oxy.setOnClickListener {
+            // Tạo một Intent để đi từ MainActivity sang Oxy
+            val intent = Intent(this, Oxy::class.java)
+
+            // Kích hoạt lệnh chuyển trang
+            startActivity(intent)
+        }
         btn_Water_Filtration.setOnClickListener {
-            // Tạo một Intent để đi từ MainActivity sang Feed
+            // Tạo một Intent để đi từ MainActivity sang Water_Filtration
             val intent = Intent(this, Water_Filtration::class.java)
 
             // Kích hoạt lệnh chuyển trang

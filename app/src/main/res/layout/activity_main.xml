@@ -48,19 +48,28 @@
                 android:textSize="16sp"
                 android:paddingBottom="20dp" />
 
+
             <Button
                 android:id="@+id/btn_Feed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Feed"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#3CAFE0" />
+                android:backgroundTint="#3CAFE0"
+                android:text="Feed" />
 
             <Button
                 android:id="@+id/btn_Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Light"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#3CAFE0" />
+
+            <Button
+                android:id="@+id/btn_Oxy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oxygen"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#3CAFE0" />
 
